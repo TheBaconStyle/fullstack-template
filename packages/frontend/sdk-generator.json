@@ -1,0 +1,5 @@
+{
+  "apiInputPath": "../backend",
+  "sdkOutputPath": "sdk",
+  "sdkInterfacePath": "sdk-interface.ts"
+}
