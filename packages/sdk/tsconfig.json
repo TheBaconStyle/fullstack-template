@@ -92,6 +92,6 @@
     "strictNullChecks": true
   },
   "include": [
-    "../backend/src/sdk"
+    "../../apps/backend/src/sdk"
   ]
 }

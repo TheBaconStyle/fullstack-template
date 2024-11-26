@@ -6,7 +6,7 @@
   "typings": "lib/index.d.ts",
   "scripts": {
     "build": "npm run build:sdk && npm run compile",
-    "build:sdk": "rimraf ../backend/src/sdk/functional && cd ../backend && npx nestia sdk && cd ../sdk",
+    "build:sdk": "rimraf ../../apps/backend/src/sdk/functional && cd ../../apps/backend && npx nestia sdk && cd ../../packages/sdk",
     "compile": "rimraf lib && tsc",
     "deploy": "npm run build && npm publish",
     "prepare": "ts-patch install && typia patch"
