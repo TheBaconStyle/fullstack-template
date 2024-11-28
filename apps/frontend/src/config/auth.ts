@@ -3,6 +3,8 @@ import { db, schema } from "db";
 import NextAuth, { NextAuthConfig } from "next-auth";
 import Discord from "next-auth/providers/discord";
 import Email from "next-auth/providers/nodemailer";
+import { createTransport } from "nodemailer";
+import { renderToHTML } from "../emails/SignInEmail";
 
 export const adapter = DrizzleAdapter(db, {
   usersTable: schema.users,
@@ -17,11 +19,29 @@ const authConfig: NextAuthConfig = {
   providers: [
     Discord,
     Email({
-      server: "http://localhost:3000",
+      server: {
+        host: process.env.SMTP_HOST!,
+        port: Number(process.env.SMTP_PORT!),
+        secure: Boolean(process.env.SMTP_SECURE!),
+      },
       from: "info@example.local",
       secret: process.env.AUTH_SECRET!,
-      async sendVerificationRequest({ url }) {
-        console.log(url);
+      async sendVerificationRequest({
+        url,
+        provider: { server, from },
+        identifier,
+      }) {
+        const transport = createTransport(server);
+
+        await transport.verify();
+
+        await transport.sendMail({
+          html: await renderToHTML({ url }),
+          text: await renderToHTML({ url }, true),
+          from,
+          subject: "Sign In To App",
+          to: identifier,
+        });
       },
     }),
   ],
