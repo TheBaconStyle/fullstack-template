@@ -22,7 +22,7 @@ const authConfig: NextAuthConfig = {
       server: {
         host: process.env.SMTP_HOST!,
         port: Number(process.env.SMTP_PORT!),
-        secure: Boolean(process.env.SMTP_SECURE!),
+        secure: Boolean(JSON.parse(process.env.SMTP_SECURE!)),
       },
       from: "info@example.local",
       secret: process.env.AUTH_SECRET!,
