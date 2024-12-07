@@ -6,7 +6,7 @@ const NESTIA_CONFIG: INestiaConfig = {
   swagger: {
     output: 'src/swagger/swagger.json',
     beautify: true,
-    servers: [{ url: `http://localhost:${process.env.PORT}` }],
+    servers: [{ url: `http://localhost:5000` }],
   },
   distribute: '../../packages/sdk',
   primitive: true,

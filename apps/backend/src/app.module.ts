@@ -1,10 +1,9 @@
 import { DrizzlePGModule } from '@knaadh/nestjs-drizzle-pg';
 import { Logger, Module, OnModuleInit } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { RouterModule } from '@nestjs/core';
 import { createConnectionString, schema } from 'db';
-import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -45,11 +44,7 @@ import { AuthModule } from './auth/auth.module';
 export class AppModule implements OnModuleInit {
   logger = new Logger(AppModule.name);
 
-  constructor(private readonly config: ConfigService) {}
-
   async onModuleInit() {
-    this.logger.log(
-      `Server started on http://localhost:${this.config.getOrThrow('PORT')}`,
-    );
+    this.logger.log(`Server started on http://localhost:5000`);
   }
 }

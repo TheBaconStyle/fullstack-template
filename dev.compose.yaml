@@ -7,6 +7,37 @@ services:
       - "1025:1025"
     networks:
       - template
+
+  backend:
+    image: template-backend:latest
+    environment:
+      DB_HOST: ${DB_HOST:?error}
+      DB_PORT: ${DB_PORT:?error}
+      DB_NAME: ${DB_NAME:?error}
+      DB_SCHEMA: ${DB_SCHEMA:?error}
+      DB_USER: ${DB_USER:?error}
+      DB_PASSWORD: ${DB_PASSWORD:?error}
+    env_file:
+      - .env
+    ports:
+      - "5000:5000"
+    networks:
+      - template
+
+  migrator:
+    image: template-migrator:latest
+    environment:
+      DB_HOST: ${DB_HOST:?error}
+      DB_PORT: ${DB_PORT:?error}
+      DB_NAME: ${DB_NAME:?error}
+      DB_SCHEMA: ${DB_SCHEMA:?error}
+      DB_USER: ${DB_USER:?error}
+      DB_PASSWORD: ${DB_PASSWORD:?error}
+    env_file:
+      - .env
+    networks:
+      - template
+
   frontend:
     image: template-frontend:latest
     environment:
@@ -31,14 +62,14 @@ services:
       - "3000:3000"
     networks:
       - template
+
   postgres:
-    image: postgres:16.4-bullseye
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: ${POSTGRES_USER:-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
-      PGDATA: /data/postgres
     volumes:
-      - template-postgres:/data/postgres
+      - template-postgres:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:

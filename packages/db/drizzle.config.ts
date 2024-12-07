@@ -12,4 +12,6 @@ export default defineConfig({
     port: Number(process.env.DB_PORT!),
     ssl: false,
   },
+  schemaFilter: ["example"],
+  tablesFilter: ["*"],
 });
